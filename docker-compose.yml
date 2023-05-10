@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  sample-app-v2.24:
+    build:
+      context: ./sample-app-v2.24
+    ports:
+      - '9224:8080'
+  
+  sample-app-v3.20:
+    build:
+      context: ./sample-app-v3.20
+    ports:
+      - '9320:8080'

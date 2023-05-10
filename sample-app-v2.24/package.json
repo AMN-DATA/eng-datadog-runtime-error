@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "datadog-lambda-js": "6.89.0",
+    "dd-trace": "2.24.0"
+  },
+  "description": "This works properly.",
+  "devDependencies": {
+    "typescript": "5.0.4"
+  },
+  "license": "UNLICENSED",
+  "main": "index.js",
+  "name": "sample-app-v2.24",
+  "private": true,
+  "scripts": {
+    "build": "tsc --build --verbose"
+  },
+  "version": "0.0.0"
+}
