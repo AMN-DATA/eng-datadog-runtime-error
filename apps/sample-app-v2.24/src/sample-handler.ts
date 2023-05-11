@@ -5,6 +5,6 @@ class CustomError extends Error {
   }
 }
 
-export function myHanlder() {
+export async function myHanlder() {
   throw new CustomError('my error')
 }
