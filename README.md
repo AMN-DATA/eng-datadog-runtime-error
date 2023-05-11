@@ -13,7 +13,6 @@ Both sample apps contain the same code with the only difference being the `dd-tr
 
 The sample lambda function only throws the error upon being called. 
 
-
 ## Steps to reproduce 
 
 First build the apps by running: 
