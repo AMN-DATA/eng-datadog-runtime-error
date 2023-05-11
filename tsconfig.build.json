@@ -1,8 +1,5 @@
 {
   "compilerOptions": {
-    "incremental": true,
-    "outDir": "dist",
-    "rootDir": "src",
     "composite": false,
     "declaration": true,
     "declarationMap": true,
@@ -28,5 +25,6 @@
     "**/.*/",
     "**/node_modules",
     "**/dist",
+    "**/*.spec.*",
   ]
 }

@@ -16,11 +16,33 @@ The sample lambda function only throws the error upon being called.
 
 ## Steps to reproduce 
 
+First build the apps by running: 
+
+```sh
+$ yarn install
+$ yarn build:all
+``` 
+
 You can use `docker-compose.yml` file to build and run both apps: 
 
 ```sh
+$ docker-compose build
 $ docker-compose up
 ``` 
+
+Or build with docker separately: 
+
+```sh
+$ docker build -f apps/sample-app-v2.24/Dockerfile . -t sample-app-v2.24
+$ docker build -f apps/sample-app-v3.20/Dockerfile . -t sample-app-v3.20
+```
+
+And then run:
+
+```sh
+$ docker run -p 9224:8080 sample-app-v2.24
+$ docker run -p 9320:8080 sample-app-v3.20
+```
 
 Call the first sample app (runs on local port `9224`), which has `dd-trace@v2.24.0` installed: 
 

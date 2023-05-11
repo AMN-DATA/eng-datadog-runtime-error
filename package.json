@@ -1,0 +1,25 @@
+{
+  "name": "root",
+  "version": "0.0.0",
+  "private": true,
+  "repository": "AMN-DATA/eng-datadog-runtime-error",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "build:all": "tsc --build --verbose apps/*/tsconfig.json"
+  },
+  "resolutions": {
+    "@types/node": "16.18.28",
+    "ts-node": "10.9.1",
+    "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "ts-node": "10.9.1",
+    "typescript": "5.0.4"
+  },
+  "packageManager": "yarn@3.5.1",
+  "engines": {
+    "node": "^16.8.0"
+  }
+}

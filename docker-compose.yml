@@ -3,12 +3,14 @@ version: '3'
 services:
   sample-app-v2.24:
     build:
-      context: ./sample-app-v2.24
+      context: .
+      dockerfile: ./apps/sample-app-v2.24/Dockerfile
     ports:
       - '9224:8080'
   
   sample-app-v3.20:
     build:
-      context: ./sample-app-v3.20
+      context: .
+      dockerfile: ./apps/sample-app-v3.20/Dockerfile
     ports:
       - '9320:8080'
