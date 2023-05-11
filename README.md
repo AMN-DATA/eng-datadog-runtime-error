@@ -4,10 +4,10 @@ _This repository contains the reproduction case of recurring issue of [`dd-trace
 
 ## Project structure 
 
-There are two folders: 
+There are two minimal sample applications in the `apps` folder: 
 
-* [sample-app-v2.24](./sample-app-v2.24) - it contains a dockerized AWS Lambda function with installed `dd-trace` library in version `2.24.0`; this example works properly 
-* [sample-app-v3.20](./sample-app-v2.24) - it contains a dockerized AWS Lambda function with installed `dd-trace` library in (the latest at the moment [10.05.2023]) version `3.20.0`; this example wraps all the errors in the `Runtime.UnhandledPromiseRejection` 
+* [sample-app-v2.24](./apps/sample-app-v2.24) - it contains a dockerized AWS Lambda function with installed `dd-trace` library in version `2.24.0`; this example works properly 
+* [sample-app-v3.20](./apps/sample-app-v2.24) - it contains a dockerized AWS Lambda function with installed `dd-trace` library in (the latest at the moment [10.05.2023]) version `3.20.0`; this example wraps all the errors in the `Runtime.UnhandledPromiseRejection` 
 
 Both sample apps contain the same code with the only difference being the `dd-trace` package version. 
 
