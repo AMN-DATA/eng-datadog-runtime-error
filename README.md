@@ -2,6 +2,8 @@
 
 _This repository contains the reproduction case of recurring issue of [`dd-trace@^2.27`](https://github.com/DataDog/dd-trace-js) library wrapping all the erros in Runtime exceptions._ 
 
+_For further details, see **[the issue reported on `dd-trace-js` GH repository](https://github.com/DataDog/dd-trace-js/issues/2893)**._
+
 ## Project structure 
 
 There are two minimal sample applications in the `apps` folder: 
