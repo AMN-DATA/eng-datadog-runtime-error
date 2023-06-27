@@ -35,16 +35,12 @@ Or build with docker separately:
 
 ```sh
 docker build -f apps/sample-app-v2.24/Dockerfile . -t sample-app-v2.24
-docker build -f apps/sample-app-v3.20/Dockerfile . -t sample-app-v3.20
-docker build -f apps/sample-app-v3.24/Dockerfile . -t sample-app-v3.24
 ```
 
 And then run:
 
 ```sh
 docker run -p 9224:8080 sample-app-v2.24
-docker run -p 9320:8080 sample-app-v3.20
-docker run -p 9320:8080 sample-app-v3.24
 ```
 
 ### v2.24.0
@@ -53,8 +49,28 @@ Call the first sample app (runs on local port `9224`), which has `dd-trace@v2.24
 
 ```sh
 curl -XPOST "http://localhost:9224/2015-03-31/functions/function/invocations" -d '{}'
-# Returns - correct
-{"errorType":"CustomError","errorMessage":"my error","trace":["CustomError: my error","    at myHanlder (/var/task/sample-handler.js:11:11)","    at /var/task/node_modules/datadog-lambda-js/dist/utils/handler.js:166:25","    at /var/task/node_modules/datadog-lambda-js/dist/index.js:220:70","    at step (/var/task/node_modules/datadog-lambda-js/dist/index.js:44:23)","    at Object.next (/var/task/node_modules/datadog-lambda-js/dist/index.js:25:53)","    at /var/task/node_modules/datadog-lambda-js/dist/index.js:19:71","    at new Promise (<anonymous>)","    at __awaiter (/var/task/node_modules/datadog-lambda-js/dist/index.js:15:12)","    at traceListenerOnWrap (/var/task/node_modules/datadog-lambda-js/dist/index.js:197:36)","    at /var/task/node_modules/dd-trace/packages/dd-trace/src/tracer.js:102:56"]}%
+```
+
+Correct result:
+
+```json
+{
+  "errorType": "CustomError",
+  "errorMessage": "my error",
+  "trace": [
+    "CustomError: my error",
+    "    at myHanlder (/var/task/sample-handler.js:11:11)",
+    "    at /var/task/node_modules/datadog-lambda-js/dist/utils/handler.js:166:25",
+    "    at /var/task/node_modules/datadog-lambda-js/dist/index.js:220:70",
+    "    at step (/var/task/node_modules/datadog-lambda-js/dist/index.js:44:23)",
+    "    at Object.next (/var/task/node_modules/datadog-lambda-js/dist/index.js:25:53)",
+    "    at /var/task/node_modules/datadog-lambda-js/dist/index.js:19:71",
+    "    at new Promise (<anonymous>)",
+    "    at __awaiter (/var/task/node_modules/datadog-lambda-js/dist/index.js:15:12)",
+    "    at traceListenerOnWrap (/var/task/node_modules/datadog-lambda-js/dist/index.js:197:36)",
+    "    at /var/task/node_modules/dd-trace/packages/dd-trace/src/tracer.js:102:56"
+  ]
+}
 ```
 
 Note that the response has the `errorType` of `CustomError`.
@@ -65,8 +81,23 @@ Then make a request to the second sample app (runs on local port `9320`), which 
 
 ```sh
 curl -XPOST "http://localhost:9320/2015-03-31/functions/function/invocations" -d '{}'
-# Returns - mangled
-{"errorType":"Runtime.UnhandledPromiseRejection","errorMessage":"CustomError: my error","trace":["Runtime.UnhandledPromiseRejection: CustomError: my error","    at process.<anonymous> (file:///var/runtime/index.mjs:1189:17)","    at process.emit (node:events:513:28)","    at emit (node:internal/process/promises:140:20)","    at processPromiseRejections (node:internal/process/promises:274:27)","    at processTicksAndRejections (node:internal/process/task_queues:97:32)"]}%
+```
+
+⚠️ Mangled result:
+
+```json
+{
+  "errorType": "Runtime.UnhandledPromiseRejection",
+  "errorMessage": "CustomError: my error",
+  "trace": [
+    "Runtime.UnhandledPromiseRejection: CustomError: my error",
+    "    at process.<anonymous> (file:///var/runtime/index.mjs:1189:17)",
+    "    at process.emit (node:events:513:28)",
+    "    at emit (node:internal/process/promises:140:20)",
+    "    at processPromiseRejections (node:internal/process/promises:274:27)",
+    "    at processTicksAndRejections (node:internal/process/task_queues:97:32)"
+  ]
+}
 ```
 
 Note that the response has the `errorType` of `Runtime.UnhandledPromiseRejection` instead of `CustomError`.
@@ -75,6 +106,54 @@ Note that the response has the `errorType` of `Runtime.UnhandledPromiseRejection
 
 ```sh
 curl -XPOST "http://localhost:9324/2015-03-31/functions/function/invocations" -d '{}'
-# Returns - correct
-{"errorType":"CustomError","errorMessage":"my error","trace":["CustomError: my error","    at myHanlder (/var/task/sample-handler.js:11:11)","    at myHanlder (/var/task/node_modules/dd-trace/packages/dd-trace/src/lambda/handler.js:89:26)","    at /var/task/node_modules/datadog-lambda-js/dist/utils/handler.js:166:25","    at /var/task/node_modules/datadog-lambda-js/dist/index.js:220:70","    at step (/var/task/node_modules/datadog-lambda-js/dist/index.js:44:23)","    at Object.next (/var/task/node_modules/datadog-lambda-js/dist/index.js:25:53)","    at /var/task/node_modules/datadog-lambda-js/dist/index.js:19:71","    at new Promise (<anonymous>)","    at __awaiter (/var/task/node_modules/datadog-lambda-js/dist/index.js:15:12)","    at traceListenerOnWrap (/var/task/node_modules/datadog-lambda-js/dist/index.js:197:36)"]}%
+```
+
+Correct result:
+
+```json
+{
+  "errorType": "CustomError",
+  "errorMessage": "my error",
+  "trace": [
+    "CustomError: my error",
+    "    at myHanlder (/var/task/sample-handler.js:11:11)",
+    "    at myHanlder (/var/task/node_modules/dd-trace/packages/dd-trace/src/lambda/handler.js:89:26)",
+    "    at /var/task/node_modules/datadog-lambda-js/dist/utils/handler.js:166:25",
+    "    at /var/task/node_modules/datadog-lambda-js/dist/index.js:220:70",
+    "    at step (/var/task/node_modules/datadog-lambda-js/dist/index.js:44:23)",
+    "    at Object.next (/var/task/node_modules/datadog-lambda-js/dist/index.js:25:53)",
+    "    at /var/task/node_modules/datadog-lambda-js/dist/index.js:19:71",
+    "    at new Promise (<anonymous>)",
+    "    at __awaiter (/var/task/node_modules/datadog-lambda-js/dist/index.js:15:12)",
+    "    at traceListenerOnWrap (/var/task/node_modules/datadog-lambda-js/dist/index.js:197:36)"
+  ]
+}
+```
+
+### v4.3.0
+
+```sh
+curl -XPOST "http://localhost:9430/2015-03-31/functions/function/invocations" -d '{}'
+```
+
+Correct result:
+
+```json
+{
+  "errorType": "CustomError",
+  "errorMessage": "my error",
+  "trace": [
+    "CustomError: my error",
+    "    at myHanlder (/var/task/sample-handler.js:11:11)",
+    "    at myHanlder (/var/task/node_modules/dd-trace/packages/dd-trace/src/lambda/handler.js:89:26)",
+    "    at /var/task/node_modules/datadog-lambda-js/dist/utils/handler.js:166:25",
+    "    at /var/task/node_modules/datadog-lambda-js/dist/index.js:220:70",
+    "    at step (/var/task/node_modules/datadog-lambda-js/dist/index.js:44:23)",
+    "    at Object.next (/var/task/node_modules/datadog-lambda-js/dist/index.js:25:53)",
+    "    at /var/task/node_modules/datadog-lambda-js/dist/index.js:19:71",
+    "    at new Promise (<anonymous>)",
+    "    at __awaiter (/var/task/node_modules/datadog-lambda-js/dist/index.js:15:12)",
+    "    at traceListenerOnWrap (/var/task/node_modules/datadog-lambda-js/dist/index.js:197:36)"
+  ]
+}
 ```
