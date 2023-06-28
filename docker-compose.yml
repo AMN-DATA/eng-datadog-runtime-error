@@ -21,3 +21,10 @@ services:
       dockerfile: ./apps/sample-app-v3.24/Dockerfile
     ports:
       - '9324:8080'
+
+  sample-app-v4.3.0:
+    build:
+      context: .
+      dockerfile: ./apps/sample-app-v4.3.0/Dockerfile
+    ports:
+      - '9430:8080'
